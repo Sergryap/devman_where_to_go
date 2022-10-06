@@ -2,3 +2,4 @@ venv
 .idea
 /where-to-go-frontend/
 /where_to_go/.env
+/where_to_go/media/
