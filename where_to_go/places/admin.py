@@ -6,7 +6,7 @@ from .models import Place, Image
 class ImageInline(admin.TabularInline):
     model = Image
     readonly_fields = ["get_preview"]
-    ordering = ['id']
+    ordering = ['position', 'id']
     extra = 3
 
     def get_preview(self, obj):
@@ -30,6 +30,7 @@ class PlaceAdmin(admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
     list_display = ['id', 'get_preview', 'place']
     readonly_fields = ["get_preview"]
+    ordering = ['id']
 
     def get_preview(self, obj):
         return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(

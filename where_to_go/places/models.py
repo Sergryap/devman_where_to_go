@@ -17,3 +17,7 @@ class Place(models.Model):
 class Image(models.Model):
     image = models.ImageField(upload_to='place_images', blank=True)
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='images')
+    position = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.place.title}"

@@ -10,7 +10,10 @@ def details_url(request, pk):
     instance = instances.get(pk=pk)
     details = {
         "title": instance.title,
-        "imgs": [path.join('media', img['image']) for img in instance.images.values()],
+        "imgs": [
+            path.join('media', img['image'])
+            for img in sorted(list(instance.images.values()), key=lambda m: m['position'])
+        ],
         "description_short": instance.description_short,
         "description_long": instance.description_long,
         "coordinates": {
