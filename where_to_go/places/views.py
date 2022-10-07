@@ -12,7 +12,7 @@ def details_url(request, pk):
         "title": instance.title,
         "imgs": [
             path.join('media', img['image'])
-            for img in sorted(list(instance.images.values()), key=lambda m: m['position'])
+            for img in instance.images.order_by('position').values()
         ],
         "description_short": instance.description_short,
         "description_long": instance.description_long,
