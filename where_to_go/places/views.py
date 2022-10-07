@@ -1,10 +1,6 @@
-from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-import json
-
 from django.urls import reverse
-
 from .models import Place
 
 
@@ -13,7 +9,7 @@ def details_url(request, pk):
     instance = instances.get(pk=pk)
     details = {
         "title": instance.title,
-        "imgs": [img['image'] for img in instance.images.values()],
+        "imgs": [f"media/{img['image']}" for img in instance.images.values()],
         "description_short": instance.description_short,
         "description_long": instance.description_long,
         "coordinates": {
@@ -37,7 +33,7 @@ def start(request):
                 "type": "Point",
                 "coordinates": [
                     round(float(place.coordinate_lng), 2),
-                    round(float(place.coordinate_lng), 6)
+                    round(float(place.coordinate_lat), 6)
                 ]
             },
             "properties": {
@@ -47,9 +43,7 @@ def start(request):
             }
         }
         features.append(feature)
-
-    context = {"features": features}
-
-    return render(request, template, context=context)
+    places_geojson = {"type": "FeatureCollection", "features": features}
+    return render(request, template, context={"places_geojson": places_geojson})
 
 
