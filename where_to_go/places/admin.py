@@ -1,13 +1,27 @@
+import csv
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+
 from .models import Place, Image
+from django.http import HttpResponse
 
 
 # Register your models here.
 
+
 class ImageInline(admin.TabularInline):
     model = Image
+    readonly_fields = ["get_preview"]
     ordering = ['id']
     extra = 5
+
+    def get_preview(self, obj):
+        return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+            url=obj.image.url,
+            width=obj.image.width*0.3,
+            height=obj.image.height*0.3,
+            )
+        )
 
 
 @admin.register(Place)
@@ -19,4 +33,13 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['id', 'image', 'place']
+    list_display = ['id', 'get_preview', 'place']
+    readonly_fields = ["get_preview"]
+
+    def get_preview(self, obj):
+        return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+            url=obj.image.url,
+            width=obj.image.width*0.22,
+            height=obj.image.height*0.22,
+            )
+        )
