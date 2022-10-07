@@ -1,19 +1,13 @@
-import csv
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-
 from .models import Place, Image
-from django.http import HttpResponse
-
-
-# Register your models here.
 
 
 class ImageInline(admin.TabularInline):
     model = Image
     readonly_fields = ["get_preview"]
     ordering = ['id']
-    extra = 5
+    extra = 3
 
     def get_preview(self, obj):
         return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
@@ -28,6 +22,7 @@ class ImageInline(admin.TabularInline):
 class PlaceAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
     list_display = ['title', 'description_short', 'coordinate_lng', 'coordinate_lat']
+    ordering = ['title']
     list_editable = ['description_short']
 
 
