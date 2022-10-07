@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Place
@@ -49,5 +49,3 @@ def start(request):
         features.append(feature)
     places_geojson = {"type": "FeatureCollection", "features": features}
     return render(request, template, context={"places_geojson": places_geojson})
-
-

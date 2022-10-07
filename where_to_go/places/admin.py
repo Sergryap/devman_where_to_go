@@ -23,7 +23,7 @@ class PlaceAdmin(admin.ModelAdmin):
     inlines = [ImageInline]
     list_display = ['title', 'description_short', 'coordinate_lng', 'coordinate_lat']
     ordering = ['title']
-    list_editable = ['description_short']
+    list_editable = ['description_short', 'coordinate_lng', 'coordinate_lat']
 
 
 @admin.register(Image)
