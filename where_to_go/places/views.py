@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import Place
 from os import path
+import re
 
 
 def details_url(request, pk):
@@ -29,8 +30,12 @@ def start(request):
     template = 'places/index.html'
     places = Place.objects.all().prefetch_related('images')
     features = []
+    pattern = re.compile(r"""(?<=['\"«]).+(?=['\"»])""")
 
     for place in places:
+        title = pattern.search(place.title)
+        title = title.group() if title else ' '.join(place.title.split()[:2])
+
         feature = {
             "type": "Feature",
             "geometry": {
@@ -41,7 +46,7 @@ def start(request):
                 ]
             },
             "properties": {
-                "title": place.title.split("«")[1][:-1],
+                "title": title,
                 "placeId": place.pk,
                 "detailsUrl": reverse(details_url, kwargs={'pk': place.pk})
             }
