@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from sshtunnel import SSHTunnelForwarder
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,17 +78,35 @@ WSGI_APPLICATION = 'where_to_go.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+ssh_tunnel = SSHTunnelForwarder(
+    ssh_address_or_host=os.getenv("SSH_HOST"),
+    ssh_username='sergryap',
+    ssh_password=os.getenv("SSH_PASSWORD"),
+    remote_bind_address=('localhost', 5432),
+)
+ssh_tunnel.start()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'HOST': 'localhost',
+        'PORT': ssh_tunnel.local_bind_port,
         'NAME': 'where_to_go',
-        'USER': 'postgres',
-        'PASSWORD': f'{os.getenv("DB_PSW")}'
+        'USER': 'where_to_go',
+        'PASSWORD': f'{os.getenv("DB_PSW_SSH")}'
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#         'NAME': 'where_to_go',
+#         'USER': 'postgres',
+#         'PASSWORD': f'{os.getenv("DB_PSW")}'
+#     }
+# }
 
 
 # Password validation
