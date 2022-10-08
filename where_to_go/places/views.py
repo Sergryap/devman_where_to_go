@@ -34,7 +34,7 @@ def start(request):
 
     for place in places:
         title = pattern.search(place.title)
-        title = title.group() if title else ' '.join(place.title.split()[:2])
+        title = title.group() if title else place.title
 
         feature = {
             "type": "Feature",
