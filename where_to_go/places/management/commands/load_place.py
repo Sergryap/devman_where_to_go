@@ -5,13 +5,11 @@ import requests
 from os import path
 
 
-
-
 class Command(BaseCommand):
-    help = """\
-    Команда для парсинг данных из JSON-файла и записи в базу данных:
-    $ python3 manage.py load_place http://адрес/файла.json
-    """
+
+    # Команда для парсинг данных из JSON-файла и записи в базу данных:
+    # $ python3 manage.py load_place http://адрес/файла.json
+
 
     def add_arguments(self, parser):
         parser.add_argument('url', type=str)
