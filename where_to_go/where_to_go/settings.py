@@ -78,24 +78,24 @@ WSGI_APPLICATION = 'where_to_go.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-ssh_tunnel = SSHTunnelForwarder(
-    ssh_address_or_host=os.getenv("SSH_HOST"),
-    ssh_username='sergryap',
-    ssh_password=os.getenv("SSH_PASSWORD"),
-    remote_bind_address=('localhost', 5432),
-)
-ssh_tunnel.start()
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'PORT': ssh_tunnel.local_bind_port,
-        'NAME': 'where_to_go',
-        'USER': 'where_to_go',
-        'PASSWORD': f'{os.getenv("DB_PSW_SSH")}'
-    }
-}
+# ssh_tunnel = SSHTunnelForwarder(
+#     ssh_address_or_host=os.getenv("SSH_HOST"),
+#     ssh_username=os.getenv("SSH_USER"),
+#     ssh_password=os.getenv("SSH_PASSWORD"),
+#     remote_bind_address=('localhost', 5432),
+# )
+# ssh_tunnel.start()
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'HOST': 'localhost',
+#         'PORT': ssh_tunnel.local_bind_port,
+#         'NAME': 'where_to_go',
+#         'USER': 'where_to_go',
+#         'PASSWORD': f'{os.getenv("DB_PSW_SSH")}'
+#     }
+# }
 
 # DATABASES = {
 #     'default': {
@@ -108,6 +108,12 @@ DATABASES = {
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
