@@ -11,3 +11,10 @@
 <br><br>![admin_1](https://user-images.githubusercontent.com/99894266/194737078-280eb029-410c-4c0f-9890-8bbf5334f69f.jpg)
 1. Для добавления нового места на карте перейдите в `Places`:
 <br><br>`http://45.84.226.238:8000/admin/places/place/`
+<br><br> и нажмите `ADD PLACE`:
+<br><br>![admin_2](https://user-images.githubusercontent.com/99894266/194737430-8d9fd208-b375-4352-b707-edc800a2317d.jpg)
+1. Для изменения уже существующего места перейдите по нужному пункту:
+<br><br>![admin_3](https://user-images.githubusercontent.com/99894266/194737488-4f3381a2-5d8d-4922-830a-803a5c1bb0cd.jpg)
+1. Добавьте или измените данные или фото:
+<br><br>![admin_4](https://user-images.githubusercontent.com/99894266/194737540-87e56f77-62e7-41eb-829f-d4d43e95bada.jpg)
+
