@@ -22,12 +22,15 @@ class Command(BaseCommand):
         reviews['coordinate_lng'] = coordinates['lng']
         reviews['coordinate_lat'] = coordinates['lat']
         imgs = reviews.pop('imgs')
+        title = reviews.pop('title')
         place, created = Place.objects.get_or_create(
-            title=reviews.pop('title'),
-            defaults={**reviews})
+            title=title,
+            defaults=reviews)
 
         if created:
+            print(f'Создаю метку с названием: "{title}"')
             for img in imgs:
+                print(f'Загружаю фото: "{img}"')
                 filename = path.join('place_images', path.split(img)[1])
                 filename_all = path.join(MEDIA_ROOT, filename)
                 Image.objects.get_or_create(
@@ -38,3 +41,7 @@ class Command(BaseCommand):
                 response.raise_for_status()
                 with open(filename_all, 'wb') as file:
                     file.write(response.content)
+            print('Загрузка прошла успешно')
+            print(f'Добавлена метка с названием "{title}"')
+        else:
+            print(f'Позиция с названием "{title}" уже имеется в базе данных')
