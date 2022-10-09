@@ -22,8 +22,7 @@ class Command(BaseCommand):
         reviews['coordinate_lng'] = reviews['coordinates']['lng']
         reviews['coordinate_lat'] = reviews['coordinates']['lat']
         del reviews['coordinates']
-        imgs = reviews['imgs']
-        del reviews['imgs']
+        imgs = reviews.pop('imgs')
         place, created = Place.objects.get_or_create(**reviews)
 
         for img in imgs:
