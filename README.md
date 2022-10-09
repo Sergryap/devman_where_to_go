@@ -50,7 +50,7 @@
 1. Активируте виртуальное окружение:
 <br>`source venv/bin/activate`
 1. Установите все зависимости:
-<br>pip install -r requirements.txt`
+<br>`pip install -r requirements.txt`
 1. В настройках settings.py разрешите использовать ip вашего сервера:
 <br>`ALLOWED_HOSTS = [<IP вашего сервера>]`
 1. Запустите виртуальный сервер:
