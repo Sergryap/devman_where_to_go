@@ -20,7 +20,6 @@ def details_url(request, pk):
     return JsonResponse(details, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
-# Create your views here.
 def start(request):
     template = 'places/index.html'
     places = Place.objects.all()
