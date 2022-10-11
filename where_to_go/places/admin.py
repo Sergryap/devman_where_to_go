@@ -7,7 +7,7 @@ from .models import Place, Image
 class ImageInline(SortableTabularInline):
     model = Image
     fields = ['position', 'image', 'get_preview']
-    readonly_fields = ["get_preview"]
+    readonly_fields = ['get_preview']
     extra = 5
 
     def get_preview(self, obj):
@@ -31,7 +31,7 @@ class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
 @admin.register(Image)
 class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = ['id', 'get_preview', 'place', 'position']
-    readonly_fields = ["get_preview"]
+    readonly_fields = ['get_preview']
 
     def get_preview(self, obj):
         width = 300
