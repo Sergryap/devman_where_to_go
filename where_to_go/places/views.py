@@ -27,7 +27,7 @@ def details_url(request, pk):
 # Create your views here.
 def start(request):
     template = 'places/index.html'
-    places = Place.objects.all().prefetch_related('images')
+    places = Place.objects.all()
     features = []
 
     for place in places:
