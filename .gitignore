@@ -4,3 +4,4 @@ venv
 /where_to_go/.env
 /where_to_go/media/
 /where-to-go-frontend/where-to-go-places/
+where_to_go/db.sqlite3
