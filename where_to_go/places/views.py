@@ -1,19 +1,15 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .models import Place
 from os import path
 
 
 def details_url(request, pk):
-    instances = Place.objects.all().prefetch_related('images')
-    instance = instances.get(pk=pk)
+    instance = get_object_or_404(Place.objects.all().prefetch_related('images'), pk=pk)
     details = {
         "title": instance.title,
-        "imgs": [
-            path.join('media', img['image'])
-            for img in instance.images.order_by('position').values()
-        ],
+        "imgs": [img.image.url for img in instance.images.order_by('position')],
         "description_short": instance.description_short,
         "description_long": instance.description_long,
         "coordinates": {
