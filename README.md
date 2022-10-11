@@ -52,8 +52,6 @@
 <br>`source venv/bin/activate`
 * Установите все зависимости:
 <br>`pip install -r requirements.txt`
-* В настройках settings.py разрешите использовать ip вашего сервера:
-<br>`ALLOWED_HOSTS = [<IP вашего сервера>]`
 * В settings.py настройте подключение к базе данных:
 <br>Пример подключения:
 ```
