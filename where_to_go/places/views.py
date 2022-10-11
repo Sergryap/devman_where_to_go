@@ -41,8 +41,8 @@ def start(request):
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    round(float(place.coordinate_lng), 2),
-                    round(float(place.coordinate_lat), 6)
+                    place.coordinate_lng,
+                    place.coordinate_lat,
                 ]
             },
             "properties": {
