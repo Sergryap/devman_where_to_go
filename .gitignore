@@ -1,7 +1,6 @@
 venv
 .idea
-/where-to-go-frontend/
-/where_to_go/.env
+/.env
 /where_to_go/media/
-/where-to-go-frontend/where-to-go-places/
-where_to_go/db.sqlite3
+db.sqlite3
+/media

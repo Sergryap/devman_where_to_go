@@ -1,4 +1,4 @@
-from where_to_go.settings import MEDIA_ROOT
+from where_to.settings import MEDIA_ROOT
 from django.core.management.base import BaseCommand
 from places.models import Place, Image
 import requests
