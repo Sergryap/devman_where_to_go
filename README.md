@@ -62,9 +62,13 @@ ALLOWED_HOSTS=<ip разрешенных серверов>
 <br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django
 <br>Подробнее см. здесь:
 [https://docs.djangoproject.com/en/4.1/ref/settings/](https://docs.djangoproject.com/en/4.1/ref/settings/)
-
-
-* Передайте все приватные данные из `.env` через `os.getenv(<"КЛЮЧ">)` в тех местах кода, где это нужно.
+* Создайте миграции и проведите их:
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+* Создайте первого суперпользователя:
+<br>`python3 manage.py createsuperuser`
 * Запустите виртуальный сервер:
 <br>`python3 manage.py runserver 0.0.0.0:8000`
 * Сайт будет доступен по ссылке:
