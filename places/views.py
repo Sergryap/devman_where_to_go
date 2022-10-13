@@ -12,8 +12,8 @@ def details_url(request, pk):
         'description_short': place.description_short,
         'description_long': place.description_long,
         'coordinates': {
-            'lng': place.coordinate_lng,
-            'lat': place.coordinate_lat
+            'lng': place.lng,
+            'lat': place.lat
         }
     }
     return JsonResponse(details, json_dumps_params={'ensure_ascii': False})
@@ -31,8 +31,8 @@ def start(request):
             'geometry': {
                 'type': 'Point',
                 'coordinates': [
-                    place.coordinate_lng,
-                    place.coordinate_lat,
+                    place.lng,
+                    place.lat,
                 ]
             },
             'properties': {

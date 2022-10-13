@@ -19,8 +19,8 @@ class Command(BaseCommand):
         response.raise_for_status()
         reviews = response.json()
         coordinates = reviews.pop('coordinates')
-        reviews['coordinate_lng'] = coordinates['lng']
-        reviews['coordinate_lat'] = coordinates['lat']
+        reviews['lng'] = coordinates['lng']
+        reviews['lat'] = coordinates['lat']
         imgs = reviews.pop('imgs')
         title = reviews.pop('title')
         place, created = Place.objects.get_or_create(

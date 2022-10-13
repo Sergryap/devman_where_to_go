@@ -17,9 +17,9 @@ class ImageInline(SortableTabularInline):
 @admin.register(Place)
 class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [ImageInline]
-    list_display = ['id', 'title', 'description_short', 'coordinate_lng', 'coordinate_lat']
+    list_display = ['id', 'title', 'description_short', 'lng', 'lat']
     ordering = ['id']
-    list_editable = ['description_short', 'coordinate_lng', 'coordinate_lat']
+    list_editable = ['description_short', 'lng', 'lat']
 
 
 @admin.register(Image)
