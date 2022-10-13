@@ -48,7 +48,7 @@
 <br>`git clone https://github.com/Sergryap/devman_where_to_go.git`
 * Создайте виртуальное окружение:
 <br>`python3 -m -venv venv`
-* Активируте виртуальное окружение:
+* Активируйте виртуальное окружение:
 <br>`source venv/bin/activate`
 * Установите все зависимости:
 <br>`pip install -r requirements.txt`
