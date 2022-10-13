@@ -52,7 +52,18 @@
 <br>`source venv/bin/activate`
 * Установите все зависимости:
 <br>`pip install -r requirements.txt`
-* Вынесите все приватные данные в файл `.env`
+* Задайте необходимые переменные окружения в файле `.env` по образцу:
+```
+SECRET_KEY=<секретный ключ вашего проекта джанго>
+ALLOWED_HOSTS=<ip разрешенных серверов>
+```
+где:
+<br>SECRET_KEY - секретный ключ для конкретной установки Django
+<br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django
+<br>Подробнее см.здесь:
+[https://docs.djangoproject.com/en/4.1/ref/settings/](https://docs.djangoproject.com/en/4.1/ref/settings/)
+
+
 * Передайте все приватные данные из `.env` через `os.getenv(<"КЛЮЧ">)` в тех местах кода, где это нужно.
 * Запустите виртуальный сервер:
 <br>`python3 manage.py runserver 0.0.0.0:8000`
