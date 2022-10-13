@@ -60,7 +60,7 @@ ALLOWED_HOSTS=<ip разрешенных серверов>
 где:
 <br>SECRET_KEY - секретный ключ для конкретной установки Django
 <br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django
-<br>Подробнее см.здесь:
+<br>Подробнее см. здесь:
 [https://docs.djangoproject.com/en/4.1/ref/settings/](https://docs.djangoproject.com/en/4.1/ref/settings/)
 
 
