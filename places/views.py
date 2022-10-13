@@ -4,7 +4,7 @@ from django.urls import reverse
 from .models import Place
 
 
-def details_url(request, pk):
+def get_details_url(request, pk):
     place = get_object_or_404(Place, pk=pk)
     details = {
         'title': place.title,
@@ -38,7 +38,7 @@ def start(request):
             'properties': {
                 'title': place.title,
                 'placeId': place.pk,
-                'detailsUrl': reverse(details_url, kwargs={'pk': place.pk})
+                'detailsUrl': reverse(get_details_url, kwargs={'pk': place.pk})
             }
         }
         features.append(feature)
