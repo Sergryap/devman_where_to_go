@@ -42,5 +42,5 @@ def start(request):
             }
         }
         features.append(feature)
-    places_geojson = {'type': 'FeatureCollection', 'features': features}
-    return render(request, template, context={'places_geojson': places_geojson})
+    places = {'type': 'FeatureCollection', 'features': features}
+    return render(request, template, context={'places': places})
