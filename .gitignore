@@ -3,4 +3,4 @@ venv
 /.env
 /where_to_go/media/
 db.sqlite3
-/media
+/media/place_images/*
