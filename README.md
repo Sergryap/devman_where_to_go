@@ -64,7 +64,7 @@ ALLOWED_HOSTS=<ip разрешенных серверов>
 <br>SECRET_KEY - секретный ключ для конкретной установки Django. Для начала установите любую случайную строку.
 <br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django
 #### Создайте в корневом каталоге проекта папку media/place_images:
-`mkdir /media/place_images`
+`mkdir -p /media/place_images`
 ##### Для генерации нового SECRET_KEY можно воспользоваться командой:
 `python3 manage.py get_secret_key`
 <br><br>Подробнее см. здесь:
