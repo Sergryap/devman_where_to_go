@@ -76,6 +76,8 @@ python3 manage.py migrate
 ```
 * Создайте первого суперпользователя:
 <br>`python3 manage.py createsuperuser`
+* Загрузите данные в базу данных сайта:
+<br>`python3 manage.py load_place --all`
 * Запустите виртуальный сервер:
 <br>`python3 manage.py runserver 0.0.0.0:8000`
 * Сайт будет доступен по ссылке:
