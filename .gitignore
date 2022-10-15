@@ -1,6 +1,6 @@
 venv
 .idea
 /.env
-/where_to_go/media/
 db.sqlite3
-/media/place_images/*
+/media
+
