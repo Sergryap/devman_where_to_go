@@ -15,20 +15,6 @@ class Command(BaseCommand):
     Команда для парсинг данных и записи в базу данных
     """
 
-    def add_arguments(self, parser):
-        parser.add_argument(
-            '-a', '--all', type=str,
-            help='Полная загрузка всех локация с указанного url'
-        )
-        parser.add_argument(
-            '-ad', '--all_default', action='store_true',
-            help='Полная загрузка всех локация из url, заданного в ключе "URL_PLACES_DEFAULT" внешнего окружения'
-        )
-        parser.add_argument(
-            '-u', '--url', type=str,
-            help='Загрузка локациия с одного указанного url содержащего ссылку на json-файл'
-        )
-
     @staticmethod
     def get_location_details(link):
         """
@@ -53,7 +39,7 @@ class Command(BaseCommand):
     @staticmethod
     def upload_images_to_place(images, place):
         """
-        Загрузка фотографий для объекта 'place' в БД и в папку 'media' из списка 'images'
+        Загрузка фотографий для объекта 'place' в БД и в папку 'media/place_images' из списка 'images'
         """
         for position, img in enumerate(images, start=1):
             print(f'Загружаю фото: "{img}"')
@@ -77,6 +63,20 @@ class Command(BaseCommand):
             print('Загрузка прошла успешно', f'Добавлена метка с названием "{title}"', sep='\n')
         else:
             print(f'Позиция с названием "{title}" уже имеется в базе данных')
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '-a', '--all', type=str,
+            help='Полная загрузка всех локаций с указанного url'
+        )
+        parser.add_argument(
+            '-ad', '--all_default', action='store_true',
+            help='Полная загрузка всех локаций из url, заданного в ключе "URL_PLACES_DEFAULT" внешнего окружения'
+        )
+        parser.add_argument(
+            '-u', '--url', type=str,
+            help='Загрузка локации с одного указанного url, содержащего ссылку на json-файл'
+        )
 
     def handle(self, *args, **options):
         link_all = options['all']
