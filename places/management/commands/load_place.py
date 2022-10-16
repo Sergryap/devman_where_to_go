@@ -92,10 +92,7 @@ class Command(BaseCommand):
             src = requests.get(link_all_places)
             src.raise_for_status()
             soup = BeautifulSoup(src.text, 'lxml')
-            link_blocks = (
-                soup.find('div', attrs={'data-test-selector': "subdirectory-container"})
-                .find_all('a', attrs={'href': re.compile(r'.+\.json')})
-            )
+            link_blocks = soup.find_all('a', attrs={'href': re.compile(r'.+\.json')})
             for block in link_blocks:
                 url = ''.join(['https://raw.githubusercontent.com', block['href'].replace('blob/', '')])
                 self.upload_url(url)
