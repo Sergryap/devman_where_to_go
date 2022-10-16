@@ -42,8 +42,12 @@
     }
 }
 ```
-* Для добавления сразу нескольких позиций из https://github.com/devmanorg/where-to-go-places/tree/master/places используйте команду:
-<br><br>`python3 manage.py load_place --all`
+* Для добавления сразу нескольких позиций из указанного url используйте команду:
+<br><br>`python3 manage.py load_place --all <url>`
+<br>Ссылка `<url>` должна вести на страницу собержащую данные о локациях на подобие [этой](https://github.com/devmanorg/where-to-go-places/tree/master/places)
+
+* Для добавления сразу нескольких позиций из url по умолчанию используйте команду:
+<br><br>`python3 manage.py load_place -ad`
 ***
 ## Как установить сайт на удаленном сервере
 #### Упрощенный вариант для ознакомительных целей
@@ -59,12 +63,11 @@
 ```
 SECRET_KEY=<секретный ключ вашего проекта джанго>
 ALLOWED_HOSTS=<ip разрешенных серверов>
+URL_PLACES_DEFAULT=<ссылка на страницу с данными по локациям для загрузки по умолчанию>
 ```
 где:
 <br>SECRET_KEY - секретный ключ для конкретной установки Django. Для начала установите любую случайную строку.
 <br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django
-#### Создайте в корневом каталоге проекта папку media/place_images:
-`mkdir -p /media/place_images`
 ##### Для генерации нового SECRET_KEY можно воспользоваться командой:
 `python3 manage.py get_secret_key`
 <br><br>Подробнее см. здесь:
@@ -74,7 +77,7 @@ ALLOWED_HOSTS=<ip разрешенных серверов>
 * Создайте первого суперпользователя:
 <br>`python3 manage.py createsuperuser`
 * Загрузите данные в базу данных сайта:
-<br>`python3 manage.py load_place --all`
+<br>`python3 manage.py load_place -ad`
 * Запустите виртуальный сервер:
 <br>`python3 manage.py runserver 0.0.0.0:8000`
 * Сайт будет доступен по ссылке:
