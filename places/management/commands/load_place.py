@@ -1,7 +1,9 @@
+import re
+import requests
+
 from where_to_go.settings import MEDIA_ROOT
 from django.core.management.base import BaseCommand
 from places.models import Place, Image
-import requests
 from os import path, makedirs
 from bs4 import BeautifulSoup
 
@@ -90,7 +92,10 @@ class Command(BaseCommand):
             src = requests.get(link_all_places)
             src.raise_for_status()
             soup = BeautifulSoup(src.text, 'lxml')
-            link_blocks = soup.find_all(class_='js-navigation-open Link--primary')
+            link_blocks = (
+                soup.find('div', attrs={'data-test-selector': "subdirectory-container"})
+                .find_all('a', attrs={'href': re.compile(r'.+\.json')})
+            )
             for block in link_blocks:
                 url = ''.join(['https://raw.githubusercontent.com', block['href'].replace('blob/', '')])
                 self.upload_url(url)
