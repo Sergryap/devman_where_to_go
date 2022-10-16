@@ -39,5 +39,5 @@ def start(request):
         }
         features.append(feature)
 
-    places = {'type': 'FeatureCollection', 'features': features}
-    return render(request, template, context={'places': places})
+    places_list = {'type': 'FeatureCollection', 'features': features}
+    return render(request, template, context={'places': places_list})
