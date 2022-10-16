@@ -5,8 +5,8 @@ from tinymce.models import HTMLField
 
 class Place(models.Model):
     title = models.CharField(max_length=100, unique=True)
-    description_short = models.TextField()
-    description_long = HTMLField()
+    description_short = models.TextField(blank=True)
+    description_long = HTMLField(blank=True)
     lng = models.DecimalField(
         max_digits=17,
         decimal_places=14,
