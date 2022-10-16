@@ -25,15 +25,11 @@ def start(request):
     features = []
 
     for place in places:
-
         feature = {
             'type': 'Feature',
             'geometry': {
                 'type': 'Point',
-                'coordinates': [
-                    place.lng,
-                    place.lat,
-                ]
+                'coordinates': [place.lng, place.lat]
             },
             'properties': {
                 'title': place.title,
@@ -42,5 +38,6 @@ def start(request):
             }
         }
         features.append(feature)
+
     places = {'type': 'FeatureCollection', 'features': features}
     return render(request, template, context={'places': places})

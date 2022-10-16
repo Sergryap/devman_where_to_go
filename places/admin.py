@@ -11,7 +11,10 @@ class ImageInline(SortableTabularInline):
     extra = 5
 
     def get_preview(self, obj):
-        return format_html(f'<img style="max-height:200px" src="{obj.image.url}"/>')
+        return format_html('<img style="max-height:{height}" src="{url}"/>',
+                           height='200px',
+                           url=obj.image.url
+                           )
 
 
 @admin.register(Place)
@@ -28,4 +31,7 @@ class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     readonly_fields = ['get_preview']
 
     def get_preview(self, obj):
-        return format_html(f'<img style="max-height:200px" src="{obj.image.url}"/>')
+        return format_html('<img style="max-height:{height}" src="{url}"/>',
+                           height='200px',
+                           url=obj.image.url
+                           )
