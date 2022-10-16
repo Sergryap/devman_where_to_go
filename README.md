@@ -1,6 +1,6 @@
 # Куда пойти — Москва глазами Артёма
 ## Сайт о самых интересных местах в Москве. Авторский проект Артёма.
-![where_to_go_prew](https://user-images.githubusercontent.com/99894266/194736763-58a2ed39-4340-4031-8c8e-a2b6d47667be.jpg)
+![Screenshot from 2022-10-16 17-06-34](https://user-images.githubusercontent.com/99894266/196034572-599405e8-8f00-49a9-be9c-5c5cb0f2e69a.png)
 *[Пример работающего сайта](http://45.84.226.238:8000/)*
 <br>**Важно! Запускайте с протоколом `http://`**
 ## Как устроен сайт
@@ -12,11 +12,13 @@
 1. Для добавления нового места на карте перейдите в `Places`:
 <br><br>[http://45.84.226.238:8000/admin/places/place/](http://45.84.226.238:8000/admin/places/place/)
 <br><br> и нажмите `ADD PLACE`:
-<br><br>![admin_2](https://user-images.githubusercontent.com/99894266/194737430-8d9fd208-b375-4352-b707-edc800a2317d.jpg)
-1. Для изменения уже существующего места перейдите по нужному пункту:
-<br><br>![admin_3](https://user-images.githubusercontent.com/99894266/194737488-4f3381a2-5d8d-4922-830a-803a5c1bb0cd.jpg)
+<br><br>![Screenshot from 2022-10-16 17-01-14](https://user-images.githubusercontent.com/99894266/196034293-240de9ae-60a8-437e-8a93-acb46376ad3b.png)
+
+1. Для изменения уже существующего места перейдите по нужному пункту в колонке **title**
+
 1. Добавьте или измените данные или фото:
-<br><br>![admin_4](https://user-images.githubusercontent.com/99894266/194737540-87e56f77-62e7-41eb-829f-d4d43e95bada.jpg)
+<br><br>![Screenshot from 2022-10-16 17-04-22](https://user-images.githubusercontent.com/99894266/196034412-9594599d-0e6e-4b34-bdf7-9a72dde2177c.png)
+
 ***
 ## Как добавить метку на карте через терминал
 Для добавления новой метки на карту средствами разработчика используйте команду `load_place`
