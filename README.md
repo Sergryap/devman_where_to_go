@@ -54,18 +54,26 @@
 #### Упрощенный вариант для ознакомительных целей
 * Загрузите данные на сервер:
 <br>`git clone https://github.com/Sergryap/devman_where_to_go.git`
+* Перейдите в созданную папку проекта:
+<br>`cd devman_where_to_go`
 * Создайте виртуальное окружение:
-<br>`python3 -m -venv venv`
+<br>`python3 -m venv venv`
 * Активируйте виртуальное окружение:
 <br>`source venv/bin/activate`
 * Установите все зависимости:
 <br>`pip install -r requirements.txt`
+<br>![Screenshot from 2022-10-16 16-39-58](https://user-images.githubusercontent.com/99894266/196033665-ab90bff3-530b-4334-94b7-2cb0c3b38f6f.png)
+
 * Создайте в корневом каталоге вашего проекта файл `.env` и задайте в нем переменные окружения по образцу:
 ```
 SECRET_KEY=<секретный ключ вашего проекта джанго>
 ALLOWED_HOSTS=<ip разрешенных серверов>
 URL_PLACES_DEFAULT=<ссылка на страницу с данными по локациям для загрузки по умолчанию>
 ```
+<br>![Screenshot from 2022-10-16 16-55-50](https://user-images.githubusercontent.com/99894266/196034180-82f58e4e-be68-450b-a2c4-2f8241eba949.png)
+
+<br>![Screenshot from 2022-10-16 16-57-25](https://user-images.githubusercontent.com/99894266/196034160-2f7abe4a-a828-4d11-86d6-53eda914985d.png)
+
 где:
 <br>SECRET_KEY - секретный ключ для конкретной установки Django. Для начала установите любую случайную строку.
 <br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django.
@@ -78,10 +86,15 @@ URL_PLACES_DEFAULT=<ссылка на страницу с данными по л
 <br>`python3 manage.py migrate`
 * Создайте первого суперпользователя:
 <br>`python3 manage.py createsuperuser`
+<br>![Screenshot from 2022-10-16 16-42-07](https://user-images.githubusercontent.com/99894266/196033937-8b0a0f8c-b85a-4342-b722-d1e8b4c1f7c5.png)
 * Загрузите данные в базу данных сайта:
 <br>`python3 manage.py load_place -ad`
+<br>![Screenshot from 2022-10-16 16-42-39](https://user-images.githubusercontent.com/99894266/196033759-85f5bbab-1e86-4552-997b-6636c293575c.png)
+
 * Запустите виртуальный сервер:
 <br>`python3 manage.py runserver 0.0.0.0:8000`
+<br>![Screenshot from 2022-10-16 16-45-30](https://user-images.githubusercontent.com/99894266/196033858-6440bbfe-4e11-4087-a5b4-cc71bc037fb1.png)
+
 * Сайт будет доступен по ссылке:
 <br>`http://<IP вашего сервера>:8000/`
 
