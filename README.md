@@ -69,11 +69,8 @@ ALLOWED_HOSTS=<ip разрешенных серверов>
 `python3 manage.py get_secret_key`
 <br><br>Подробнее см. здесь:
 [https://docs.djangoproject.com/en/4.1/ref/settings/](https://docs.djangoproject.com/en/4.1/ref/settings/)
-* Создайте миграции и проведите их:
-```
-python3 manage.py makemigrations
-python3 manage.py migrate
-```
+* Выполните команду, для создания базы данных:
+<br>`python3 manage.py migrate`
 * Создайте первого суперпользователя:
 <br>`python3 manage.py createsuperuser`
 * Загрузите данные в базу данных сайта:
