@@ -67,7 +67,8 @@ URL_PLACES_DEFAULT=<ссылка на страницу с данными по л
 ```
 где:
 <br>SECRET_KEY - секретный ключ для конкретной установки Django. Для начала установите любую случайную строку.
-<br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django
+<br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django.
+<br>URL_PLACES_DEFAULT - ссылка на страницу github, содержащая данные о локациях по подобию [этой страницы](https://github.com/devmanorg/where-to-go-places/tree/master/places)
 ##### Для генерации нового SECRET_KEY можно воспользоваться командой:
 `python3 manage.py get_secret_key`
 <br><br>Подробнее см. здесь:
