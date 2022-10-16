@@ -1,5 +1,5 @@
 from django.contrib import admin
-from adminsortable2.admin import SortableAdminMixin, SortableTabularInline
+from adminsortable2.admin import SortableAdminMixin, SortableTabularInline, SortableAdminBase
 from django.utils.html import format_html
 from .models import Place, Image
 
@@ -18,10 +18,9 @@ class ImageInline(SortableTabularInline):
 
 
 @admin.register(Place)
-class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
+class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     inlines = [ImageInline]
-    list_display = ['id', 'title', 'description_short', 'lng', 'lat']
-    ordering = ['id']
+    list_display = ['title', 'description_short', 'lng', 'lat']
     list_editable = ['description_short', 'lng', 'lat']
 
 
