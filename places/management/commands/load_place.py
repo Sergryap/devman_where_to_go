@@ -16,12 +16,18 @@ class Command(BaseCommand):
     """
 
     def add_arguments(self, parser):
-        parser.add_argument('-a', '--all', type=str,
-                            help='Полная загрузка с указанного url')
-        parser.add_argument('-ad', '--all_default', action='store_true',
-                            help='Загрузка из url, заданного в ключе "URL_PLACES_DEFAULT" внешнего окружения')
-        parser.add_argument('-u', '--url', type=str,
-                            help='Загрузка с одного указанного url содержащего ссылку на json-файл')
+        parser.add_argument(
+            '-a', '--all', type=str,
+            help='Полная загрузка всех локация с указанного url'
+        )
+        parser.add_argument(
+            '-ad', '--all_default', action='store_true',
+            help='Полная загрузка всех локация из url, заданного в ключе "URL_PLACES_DEFAULT" внешнего окружения'
+        )
+        parser.add_argument(
+            '-u', '--url', type=str,
+            help='Загрузка локациия с одного указанного url содержащего ссылку на json-файл'
+        )
 
     @staticmethod
     def get_location_details(link):
