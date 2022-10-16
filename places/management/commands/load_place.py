@@ -27,15 +27,15 @@ class Command(BaseCommand):
         """
         response = requests.get(link)
         response.raise_for_status()
-        reviews = response.json()
-        coordinates = reviews.pop('coordinates')
-        reviews['lng'] = coordinates['lng']
-        reviews['lat'] = coordinates['lat']
-        imgs = reviews.pop('imgs')
-        title = reviews.pop('title')
+        place_details = response.json()
+        coordinates = place_details.pop('coordinates')
+        place_details['lng'] = coordinates['lng']
+        place_details['lat'] = coordinates['lat']
+        imgs = place_details.pop('imgs')
+        title = place_details.pop('title')
         place, created = Place.objects.get_or_create(
             title=title,
-            defaults=reviews)
+            defaults=place_details)
 
         if created:
             print(f'Создаю метку с названием: "{title}"')
