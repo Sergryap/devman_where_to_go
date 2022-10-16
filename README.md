@@ -44,7 +44,7 @@
 ```
 * Для добавления сразу нескольких позиций из указанного url используйте команду:
 <br><br>`python3 manage.py load_place --all <url>`
-<br>Ссылка `<url>` должна вести на страницу собержащую данные о локациях на подобие [этой](https://github.com/devmanorg/where-to-go-places/tree/master/places)
+<br>Ссылка `<url>` должна вести на страницу, содержащую данные о локациях по подобию [этой страницы](https://github.com/devmanorg/where-to-go-places/tree/master/places)
 
 * Для добавления сразу нескольких позиций из url по умолчанию используйте команду:
 <br><br>`python3 manage.py load_place -ad`
