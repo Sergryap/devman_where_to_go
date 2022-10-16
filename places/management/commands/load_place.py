@@ -2,7 +2,7 @@ from where_to_go.settings import MEDIA_ROOT
 from django.core.management.base import BaseCommand
 from places.models import Place, Image
 import requests
-from os import path, mkdir
+from os import path, makedirs
 from bs4 import BeautifulSoup
 
 from environs import Env
@@ -32,9 +32,8 @@ class Command(BaseCommand):
 
     @staticmethod
     def create_dir_media():
-        if not path.isdir(MEDIA_ROOT):
-            mkdir(MEDIA_ROOT)
-            mkdir(path.join(MEDIA_ROOT, 'place_images'))
+        if not path.isdir(path.join(MEDIA_ROOT, 'place_images')):
+            makedirs(path.join(MEDIA_ROOT, 'place_images'))
 
     @staticmethod
     def upload_images_to_place(images, place):
