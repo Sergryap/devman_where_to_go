@@ -2,7 +2,7 @@ from where_to_go.settings import MEDIA_ROOT
 from django.core.management.base import BaseCommand
 from places.models import Place, Image
 import requests
-from os import path
+from os import path, mkdir
 from bs4 import BeautifulSoup
 
 from environs import Env
@@ -16,9 +16,12 @@ class Command(BaseCommand):
     """
 
     def add_arguments(self, parser):
-        parser.add_argument('-a', '--all', type=str, help='Полная загрузка с указанного url')
-        parser.add_argument('-ad', '--all_default', action='store_true', help='Загрузка из url по умолчанию')
-        parser.add_argument('-u', '--url', type=str, help='Загрузка с одного указанного url')
+        parser.add_argument('-a', '--all', type=str,
+                            help='Полная загрузка с указанного url')
+        parser.add_argument('-ad', '--all_default', action='store_true',
+                            help='Загрузка из url, заданного в ключе "URL_PLACES_DEFAULT" внешнего окружения')
+        parser.add_argument('-u', '--url', type=str,
+                            help='Загрузка с одного указанного url содержащего ссылку на json-файл')
 
     @staticmethod
     def get_location_details(link):
@@ -36,15 +39,21 @@ class Command(BaseCommand):
         return *Place.objects.get_or_create(title=title, defaults=place), title, images
 
     @staticmethod
+    def create_dir_media():
+        if not path.isdir(MEDIA_ROOT):
+            mkdir(MEDIA_ROOT)
+            mkdir(path.join(MEDIA_ROOT, 'place_images'))
+
+    @staticmethod
     def upload_images_to_place(images, place):
         """
         Загрузка фотографий для объекта 'place' в БД и в папку 'media' из списка 'images'
         """
-        for img in images:
+        for position, img in enumerate(images, start=1):
             print(f'Загружаю фото: "{img}"')
             filename = path.join('place_images', path.split(img)[1])
             filename_all = path.join(MEDIA_ROOT, filename)
-            Image.objects.create(image=filename, place=place)
+            Image.objects.create(image=filename, place=place, position=position)
             response = requests.get(img)
             response.raise_for_status()
             with open(filename_all, 'wb') as file:
@@ -52,7 +61,7 @@ class Command(BaseCommand):
 
     def upload_url(self, link):
         """
-        Загрузка данных для локации на карте из ссылки link
+        Загрузка всех данных для одной локации из ссылки link
         """
         place, created, title, images = self.get_location_details(link)
 
@@ -63,31 +72,22 @@ class Command(BaseCommand):
         else:
             print(f'Позиция с названием "{title}" уже имеется в базе данных')
 
-    @staticmethod
-    def get_head_url_json(link_all):
-        """
-        Получение общей части ссылки на url json с данными для позиции на карте
-        """
-        details = link_all.split("/")
-        del details[details.index('tree')]
-        return '/'.join(['https://raw.githubusercontent.com'] + details[3:])
-
     def handle(self, *args, **options):
         link_all = options['all']
         link_one = options['url']
         # если аргумент --all_default указан то загрузка по умолчанию
         link_all_default = env('URL_PLACES_DEFAULT') if options['all_default'] else None
-        link_all = link_all if link_all else link_all_default
+        link_all_places = link_all if link_all else link_all_default
+        self.create_dir_media()
 
-        if link_all:
+        if link_all_places:
             # загрузка всех мест разом
-            head_url_json = self.get_head_url_json(link_all)
-            src = requests.get(link_all)
+            src = requests.get(link_all_places)
             src.raise_for_status()
             soup = BeautifulSoup(src.text, 'lxml')
             link_blocks = soup.find_all(class_='js-navigation-open Link--primary')
             for block in link_blocks:
-                url = f'{head_url_json}/{block.text}'
+                url = ''.join(['https://raw.githubusercontent.com', block['href'].replace('blob/', '')])
                 self.upload_url(url)
         else:
             # загрузка по одному
