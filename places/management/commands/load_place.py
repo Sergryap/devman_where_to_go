@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def create_dir_media():
-        if not path.isdir(path.join(MEDIA_ROOT, 'place_images')):
+        if not path.exists(path.join(MEDIA_ROOT, 'place_images')):
             makedirs(path.join(MEDIA_ROOT, 'place_images'))
 
     @staticmethod
