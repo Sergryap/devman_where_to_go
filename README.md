@@ -48,9 +48,9 @@
 <br><br>`python3 manage.py load_place --all <url>`
 <br>Ссылка `<url>` должна вести на страницу, содержащую данные о локациях по подобию [этой страницы](https://github.com/devmanorg/where-to-go-places/tree/master/places)
 
-* Для добавления сразу нескольких позиций из url по умолчанию используйте команду:
+* Для добавления сразу нескольких позиций из "https://github.com/devmanorg/where-to-go-places/tree/master/places" используйте команду:
 <br><br>`python3 manage.py load_place -ad`
-<br> При работе этой команды возможны временные паузы в связи с ограничениями github.
+<br> При работе последних двух команд возможны временные паузы в связи с ограничениями github.
 ***
 ## Как установить сайт на удаленном сервере
 #### Упрощенный вариант для ознакомительных целей
@@ -70,16 +70,16 @@
 ```
 SECRET_KEY=<секретный ключ вашего проекта джанго>
 ALLOWED_HOSTS=<ip разрешенных серверов>
-URL_PLACES_DEFAULT=<ссылка на страницу с данными по локациям для загрузки по умолчанию>
 ```
-<br>![Screenshot from 2022-10-16 16-55-50](https://user-images.githubusercontent.com/99894266/196034180-82f58e4e-be68-450b-a2c4-2f8241eba949.png)
+<br>![Screenshot from 2022-10-18 19-36-02](https://user-images.githubusercontent.com/99894266/196461116-24b696c7-37fa-4d75-b105-787f43b22ea8.png)
 
-<br>![Screenshot from 2022-10-16 16-57-25](https://user-images.githubusercontent.com/99894266/196034160-2f7abe4a-a828-4d11-86d6-53eda914985d.png)
+
+<br>![Screenshot from 2022-10-18 19-34-14](https://user-images.githubusercontent.com/99894266/196460863-84adcd1a-3f06-4533-8c86-64aba639d7cc.png)
+
 
 где:
 <br>SECRET_KEY - секретный ключ для конкретной установки Django. Для начала установите любую случайную строку.
 <br>ALLOWED_HOSTS - имена хостов/доменов (через запятую), которым разрешено обслуживать сайт Django.
-<br>URL_PLACES_DEFAULT - ссылка на страницу github, содержащую данные о локациях по подобию [этой страницы](https://github.com/devmanorg/where-to-go-places/tree/master/places)
 ##### Для генерации нового SECRET_KEY можно воспользоваться командой:
 `python3 manage.py get_secret_key`
 <br><br>Подробнее см. здесь:
