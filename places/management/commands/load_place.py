@@ -87,7 +87,7 @@ class Command(BaseCommand):
         )
         parser.add_argument(
             '-ad', '--all_default', action='store_true',
-            help='Полная загрузка всех локаций из url, заданного в ключе "URL_PLACES_DEFAULT" внешнего окружения'
+            help='Полная загрузка всех локаций из "https://github.com/devmanorg/where-to-go-places/tree/master/places"'
         )
         parser.add_argument(
             '-u', '--url', type=str,
