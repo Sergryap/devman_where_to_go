@@ -17,7 +17,7 @@ class Command(BaseCommand):
     """
 
     @staticmethod
-    def location_processing(location: dict):
+    def get_location_data(location: dict):
         """
         Обработка данных о загружаемой локации
         """
@@ -43,7 +43,7 @@ class Command(BaseCommand):
         """
         response = requests.get(link)
         response.raise_for_status()
-        title, images, location = self.location_processing(response.json())
+        title, images, location = self.get_location_data(response.json())
         place, created = Place.objects.get_or_create(title=title, defaults=location)
 
         if created:
