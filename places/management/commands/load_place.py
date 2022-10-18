@@ -1,10 +1,10 @@
 import re
 import requests
-
+from django.core.files.base import ContentFile
+from django.utils.crypto import md5
 from where_to_go.settings import MEDIA_ROOT
 from django.core.management.base import BaseCommand
 from places.models import Place, Image
-from os import path, makedirs
 from bs4 import BeautifulSoup
 
 from environs import Env
@@ -33,24 +33,26 @@ class Command(BaseCommand):
         return *Place.objects.get_or_create(title=title, defaults=place), title, images
 
     @staticmethod
-    def create_dir_media():
-        if not path.exists(path.join(MEDIA_ROOT, 'place_images')):
-            makedirs(path.join(MEDIA_ROOT, 'place_images'))
+    def load_image(place: Place, image_content: bytes, position: int):
+        # загрузка одной фотографии для объекта 'place'
+        content_file = ContentFile(image_content, name=md5(image_content).hexdigest())
+        image = Image.objects.create(place=place, image=content_file, position=position)
 
-    @staticmethod
-    def upload_images_to_place(images, place):
+        return image
+
+    def upload_images_to_place(self, images: list, place: Place):
         """
         Загрузка фотографий для объекта 'place' в БД и в папку 'media/place_images' из списка 'images'
         """
         for position, img in enumerate(images, start=1):
             print(f'Загружаю фото: "{img}"')
-            filename = path.join('place_images', path.split(img)[1])
-            filename_all = path.join(MEDIA_ROOT, filename)
-            Image.objects.create(image=filename, place=place, position=position)
             response = requests.get(img)
             response.raise_for_status()
-            with open(filename_all, 'wb') as file:
-                file.write(response.content)
+            self.load_image(
+                place=place,
+                image_content=response.content,
+                position=position
+            )
 
     def upload_url(self, link):
         """
@@ -64,6 +66,18 @@ class Command(BaseCommand):
             print('Загрузка прошла успешно', f'Добавлена метка с названием "{title}"', sep='\n')
         else:
             print(f'Позиция с названием "{title}" уже имеется в базе данных')
+
+    def upload_all(self, link_of_places):
+        """
+        Загрузка всех данных для всех локаций из общей ссылки link_of_places
+        """
+        src = requests.get(link_of_places)
+        src.raise_for_status()
+        soup = BeautifulSoup(src.text, 'lxml')
+        link_blocks = soup.find_all('a', attrs={'href': re.compile(r'.+\.json')})
+        for block in link_blocks:
+            url = ''.join(['https://raw.githubusercontent.com', block['href'].replace('blob/', '')])
+            self.upload_url(url)
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -83,19 +97,15 @@ class Command(BaseCommand):
         link_all = options['all']
         link_one = options['url']
         # если аргумент --all_default указан то загрузка по умолчанию
-        link_all_default = env('URL_PLACES_DEFAULT') if options['all_default'] else None
+        link_all_default = (
+            'https://github.com/devmanorg/where-to-go-places/tree/master/places'
+            if options['all_default'] else None
+        )
         link_all_places = link_all if link_all else link_all_default
-        self.create_dir_media()
 
         if link_all_places:
             # загрузка всех мест разом
-            src = requests.get(link_all_places)
-            src.raise_for_status()
-            soup = BeautifulSoup(src.text, 'lxml')
-            link_blocks = soup.find_all('a', attrs={'href': re.compile(r'.+\.json')})
-            for block in link_blocks:
-                url = ''.join(['https://raw.githubusercontent.com', block['href'].replace('blob/', '')])
-                self.upload_url(url)
+            self.upload_all(link_all_places)
         else:
             # загрузка по одному
             self.upload_url(link_one)
