@@ -57,11 +57,13 @@ class Command(BaseCommand):
         else:
             print(f'Позиция с названием "{title}" уже имеется в базе данных')
 
-    def upload_all(self, all_places: str):
+    def upload_all(self, link_places: str):
         """
-        Загрузка всех данных для всех локаций
+        Загрузка всех данных для всех локаций из ссылки link_places
         """
-        soup = BeautifulSoup(all_places, 'lxml')
+        src = requests.get(link_places)
+        src.raise_for_status()
+        soup = BeautifulSoup(src.text, 'lxml')
         link_blocks = soup.find_all('a', attrs={'href': re.compile(r'.+\.json')})
         for block in link_blocks:
             url = ''.join(['https://raw.githubusercontent.com', block['href'].replace('blob/', '')])
@@ -93,9 +95,7 @@ class Command(BaseCommand):
 
         if link_all_places:
             # загрузка всех мест разом
-            src = requests.get(link_all_places)
-            src.raise_for_status()
-            self.upload_all(src.text)
+            self.upload_all(link_all_places)
         else:
             # загрузка по одному
             self.upload_url(link_one)
