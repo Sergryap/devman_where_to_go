@@ -30,15 +30,16 @@ class Command(BaseCommand):
         place['lat'] = coordinates['lat']
         images = place.pop('imgs')
         title = place.pop('title')
+
         return *Place.objects.get_or_create(title=title, defaults=place), title, images
 
     @staticmethod
     def load_image(place: Place, image_content: bytes, position: int):
-        # загрузка одной фотографии для объекта 'place'
+        """
+        Загрузка одной фотографии для объекта 'place'
+        """
         content_file = ContentFile(image_content, name=md5(image_content).hexdigest())
-        image = Image.objects.create(place=place, image=content_file, position=position)
-
-        return image
+        Image.objects.create(place=place, image=content_file, position=position)
 
     def upload_images_to_place(self, images: list, place: Place):
         """
