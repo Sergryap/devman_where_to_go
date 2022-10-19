@@ -6,28 +6,11 @@ from django.core.management.base import BaseCommand
 from places.models import Place, Image
 from bs4 import BeautifulSoup
 
-from environs import Env
-env = Env()
-env.read_env()
-
 
 class Command(BaseCommand):
     """
     Команда для парсинга данных и записи в базу данных
     """
-
-    @staticmethod
-    def get_location_data(location: dict):
-        """
-        Обработка данных о загружаемой локации
-        """
-        coordinates = location.pop('coordinates')
-        location['lng'] = coordinates['lng']
-        location['lat'] = coordinates['lat']
-        images = location.pop('imgs')
-        title = location.pop('title')
-
-        return title, images, location
 
     @staticmethod
     def load_image(place: Place, image_content: bytes, position: int):
@@ -43,7 +26,12 @@ class Command(BaseCommand):
         """
         response = requests.get(link)
         response.raise_for_status()
-        title, images, location = self.get_location_data(response.json())
+        location = response.json()
+        coordinates = location.pop('coordinates')
+        location['lng'] = coordinates['lng']
+        location['lat'] = coordinates['lat']
+        images = location.pop('imgs')
+        title = location.pop('title')
         place, created = Place.objects.get_or_create(title=title, defaults=location)
 
         if created:
