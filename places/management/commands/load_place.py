@@ -8,31 +8,35 @@ from bs4 import BeautifulSoup
 
 
 class Command(BaseCommand):
-    """
-    Команда для парсинга данных и записи в базу данных
-    """
+    """Команда для парсинга данных и записи в базу данных"""
 
     @staticmethod
     def load_image(place: Place, image_content: bytes, position: int):
-        """
-        Загрузка одной фотографии для объекта 'place'
-        """
+        """Загрузка одной фотографии для объекта 'place'"""
         content_file = ContentFile(image_content, name=md5(image_content).hexdigest())
         Image.objects.create(place=place, image=content_file, position=position)
 
+    @staticmethod
+    def create_location_data(location: dict):
+        """Получение данных о локации из исходного словаря"""
+        description = {
+            'description_short': location.get('description_short', ' '),
+            'description_long': location.get('description_long', ' '),
+            'lng': location['coordinates']['lng'],
+            'lat': location['coordinates']['lat'],
+        }
+        images = location['imgs']
+        title = location['title']
+
+        return description, images, title
+
     def upload_url(self, link: str):
-        """
-        Загрузка всех данных для одной локации из ссылки link
-        """
+        """Загрузка всех данных для одной локации из ссылки link"""
         response = requests.get(link)
         response.raise_for_status()
-        location = response.json()
-        coordinates = location.pop('coordinates')
-        location['lng'] = coordinates['lng']
-        location['lat'] = coordinates['lat']
-        images = location.pop('imgs')
-        title = location.pop('title')
-        place, created = Place.objects.get_or_create(title=title, defaults=location)
+        location_init = response.json()
+        description, images, title = self.create_location_data(location_init)
+        place, created = Place.objects.get_or_create(title=title, defaults=description)
 
         if created:
             print(f'Создаю метку с названием: "{title}"')
@@ -46,9 +50,7 @@ class Command(BaseCommand):
             print(f'Позиция с названием "{title}" уже имеется в базе данных')
 
     def upload_all(self, link_places: str):
-        """
-        Загрузка всех данных для всех локаций из ссылки link_places
-        """
+        """Загрузка всех данных для всех локаций из ссылки link_places"""
         src = requests.get(link_places)
         src.raise_for_status()
         soup = BeautifulSoup(src.text, 'lxml')
@@ -79,7 +81,7 @@ class Command(BaseCommand):
             'https://github.com/devmanorg/where-to-go-places/tree/master/places'
             if options['all_default'] else None
         )
-        link_all_places = link_all if link_all else link_all_default
+        link_all_places = link_all or link_all_default
 
         if link_all_places:
             # загрузка всех мест разом
