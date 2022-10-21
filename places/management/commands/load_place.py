@@ -18,15 +18,15 @@ class Command(BaseCommand):
 
     @staticmethod
     def create_location_data(location: dict):
-        """Получение данных о локации из исходного словаря"""
+        """Получение необходимых данных о локации из исходного словаря"""
         description = {
-            'description_short': location.get('description_short', ' '),
-            'description_long': location.get('description_long', ' '),
-            'lng': location['coordinates']['lng'],
-            'lat': location['coordinates']['lat'],
+            'description_short': location.get('description_short', ''),
+            'description_long': location.get('description_long', ''),
+            'lng': location.get('coordinates', {'lng': 0}).get('lng', 0),
+            'lat': location.get('coordinates', {'lat': 0}).get('lat', 0),
         }
-        images = location['imgs']
-        title = location['title']
+        images = location.get('imgs', [])
+        title = location.get('title', f'Задайте название! {md5(b"location").hexdigest()}')
 
         return description, images, title
 
