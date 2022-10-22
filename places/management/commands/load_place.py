@@ -22,11 +22,11 @@ class Command(BaseCommand):
         description = {
             'description_short': location.get('description_short', ''),
             'description_long': location.get('description_long', ''),
-            'lng': location.get('coordinates', {'lng': 0}).get('lng', 0),
-            'lat': location.get('coordinates', {'lat': 0}).get('lat', 0),
+            'lng': location['coordinates']['lng'],
+            'lat': location['coordinates']['lat'],
         }
         images = location.get('imgs', [])
-        title = location.get('title', f'Задайте название! {md5(b"location").hexdigest()}')
+        title = location['title']
 
         return description, images, title
 
